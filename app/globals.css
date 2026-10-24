@@ -1,26 +1,79 @@
 @import "tailwindcss";
+@import "lenis/dist/lenis.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+:root,
+html[data-theme="light"] {
+  color-scheme: light;
+  --ink: #12151a;
+  --paper: #ede8dc;
+  --signal: #ff5a1f;
+  --signal-deep: #d63c0a;
+  --graphite: #5c6158;
+  --line: rgba(18, 21, 26, 0.12);
+  --band: #12151a;
+  --on-band: #ede8dc;
+  --grid-line: rgba(237, 232, 220, 0.08);
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --ink: #f1ece1;
+  --paper: #10131a;
+  --signal: #ff6a33;
+  --signal-deep: #ff8a5c;
+  --graphite: #b4b7ae;
+  --line: rgba(241, 236, 225, 0.14);
+  --band: #07090c;
+  --on-band: #f1ece1;
+  --grid-line: rgba(241, 236, 225, 0.08);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-ink: var(--ink);
+  --color-paper: var(--paper);
+  --color-signal: var(--signal);
+  --color-signal-deep: var(--signal-deep);
+  --color-graphite: var(--graphite);
+  --color-line: var(--line);
+  --color-band: var(--band);
+  --color-on-band: var(--on-band);
+  --font-sans: var(--font-manrope);
+  --font-display: var(--font-unbounded);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html,
+body {
+  background: var(--paper);
+  color: var(--ink);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-manrope), sans-serif;
+}
+
+.font-display {
+  font-family: var(--font-unbounded), sans-serif;
+}
+
+::selection {
+  background: var(--signal);
+  color: var(--on-band);
+}
+
+.grid-mesh {
+  background-image:
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 72px 72px;
+}
+
+.lenis,
+.lenis-wrapper {
+  height: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
 }
