@@ -1,4 +1,5 @@
 import { addLead } from "@/lib/leads";
+import { storageErrorResponse } from "@/lib/storage-error";
 import { notifyTelegram } from "@/lib/telegram";
 import { parseLeadPayload } from "@/lib/validate";
 import type { Lead } from "@/lib/types";
@@ -19,7 +20,11 @@ export async function POST(request: Request) {
     ...parsed.lead,
   };
 
-  await addLead(lead);
+  try {
+    await addLead(lead);
+  } catch (error) {
+    return storageErrorResponse(error);
+  }
   const telegram = await notifyTelegram(lead).catch((error) => {
     console.error("Telegram error", error);
     return { sent: false as const };
